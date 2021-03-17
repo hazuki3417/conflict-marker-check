@@ -1,7 +1,7 @@
 
 build: build-classes
 
-	g++ -I ./classes -o ./conflict-marker-check ./*.o ./conflict-marker-check.cpp
+	g++ -I ./classes -o ./conflict-marker-check ./*.o ./main.cpp
 	make clean
 
 build-classes:

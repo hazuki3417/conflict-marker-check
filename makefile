@@ -1,11 +1,16 @@
+# 多段makeの実行
+# https://boxnos.hatenablog.com/entry/20070110/1168429231
+
+build:
+	@make -C ./src build
 
 install:
-	# @cp ./rmcomment /usr/local/bin
+	@cp ./src/conflict-marker-check /usr/local/bin
 	@make message-install
 
 
 uninstall:
-	# @rm /usr/local/bin/rmcomment
+	@rm /usr/local/bin/conflict-marker-check
 	@make message-uninstall
 
 message-install:
