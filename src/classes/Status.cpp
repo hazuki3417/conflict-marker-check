@@ -2,5 +2,6 @@
 
 Status::Status()
 {
-    conflict = *(new Conflict());
+    this->conflict = *(new Conflict());
+    this->conflicts = *(new Conflict());
 }

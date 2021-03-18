@@ -8,5 +8,6 @@ private:
 
 public:
     Conflict conflict;
+    Conflict conflicts;
     Status();
 };

@@ -1,17 +1,18 @@
 #pragma once
-#include <string>
 #include <queue>
+#include <string>
 #include <ConflictMarker.hpp>
 
 class File
 {
 private:
-    std::string fileName;
-    std::queue<ConflictMarker> conflictMarkers;
+    std::string file_path;
 
 public:
-    File(std::string fileName);
-    void addConflictHead(int line);
-    void addConflictBoundary(int line);
-    void addConflictTail(int line);
+    std::queue<ConflictMarker> markers;
+    File(std::string file_path);
+    std::string get_file_path();
+    void add_conflict_head(int line);
+    void add_conflict_boundary(int line);
+    void add_conflict_tail(int line);
 };
