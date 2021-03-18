@@ -28,7 +28,7 @@ int main(int argc, const char *argv[])
      */
     if (argc <= arg_start_index)
     {
-        std::cout << "Invalid argument." << '\n';
+        std::cout << "Invalid argument." << std::endl;
         return -1;
     }
 
@@ -46,20 +46,20 @@ int main(int argc, const char *argv[])
         bool notFound = stat(argv[i], &st) != 0;
         if (notFound)
         {
-            std::cout << "The file does not exist. " << path << '\n';
+            std::cout << "The file does not exist. " << path << std::endl;
             continue;
         }
         bool isDirectory = (st.st_mode & S_IFMT) == S_IFDIR;
         if (isDirectory)
         {
-            std::cout << "Directory path cannot be specified. " << path << '\n';
+            std::cout << "Directory path cannot be specified. " << path << std::endl;
         }
 
         std::ifstream file(path);
 
         if (file.fail())
         {
-            std::cout << "Failed to open file. " << path << '\n';
+            std::cout << "Failed to open file. " << path << std::endl;
             continue;
         }
 
@@ -84,7 +84,7 @@ int main(int argc, const char *argv[])
                 status.conflict.detection();
                 MessageBase *mb = new MessageBase(lineCount);
                 queue.push(*mb);
-                std::cout << GRN << str << NC << "\n";
+                std::cout << GRN << str << NC << std::endl;
                 continue;
             }
             if (std::regex_search(str, cmatch, std::regex("^[=]{7}")))
@@ -92,7 +92,7 @@ int main(int argc, const char *argv[])
                 status.conflict.detection();
                 MessageBase *mb = new MessageBase(lineCount);
                 queue.push(*mb);
-                std::cout << RED << str << NC << "\n";
+                std::cout << RED << str << NC << std::endl;
                 continue;
             }
             if (std::regex_search(str, cmatch, std::regex("^[>]{7}")))
@@ -100,16 +100,16 @@ int main(int argc, const char *argv[])
                 status.conflict.detection();
                 MessageBase *mb = new MessageBase(lineCount);
                 queue.push(*mb);
-                std::cout << CYN << str << NC << "\n";
+                std::cout << CYN << str << NC << std::endl;
                 continue;
             }
-            std::cout << str << "\n";
+            // std::cout << str << std::endl;
         }
 
         int size = queue.size();
         for (int i = 0; i < size; i++)
         {
-            std::cout << queue.front().getMessage() << "\n";
+            std::cout << queue.front().getMessage() << std::endl;
             queue.pop();
         }
     }
