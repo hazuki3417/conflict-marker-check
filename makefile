@@ -2,16 +2,28 @@
 # https://boxnos.hatenablog.com/entry/20070110/1168429231
 
 build:
+	@echo [run] $@;
+	
 	@make -C ./src build
 
+	@echo;
+
 install:
-	@cp ./src/conflict-marker-check /usr/local/bin
+	@echo [run] $@;
+	
+	cp ./src/conflict-marker-check /usr/local/bin
+
 	@make message-install
+	@echo;
 
 
 uninstall:
-	@rm /usr/local/bin/conflict-marker-check
+	@echo [run] $@;
+	
+	rm /usr/local/bin/conflict-marker-check
+
 	@make message-uninstall
+	@echo;
 
 message-install:
 	@echo 'Installation completed!'
@@ -31,4 +43,3 @@ message-uninstall:
 	@echo '　　 ⊂⌒／ヽ-、＿_'
 	@echo '　／⊂_/＿＿＿＿ ／'
 	@echo '　￣￣￣￣￣￣￣'
-
