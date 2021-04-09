@@ -7,12 +7,6 @@
 #include <Status.hpp>
 #include <File.hpp>
 
-#define NC "\e[0m"
-#define RED "\e[0;31m"
-#define GRN "\e[0;32m"
-#define CYN "\e[0;36m"
-#define REDB "\e[41m"
-
 /**
  * @param argc 引数の数
  * @param argv 引数の文字列
@@ -72,9 +66,8 @@ int main(int argc, const char *argv[])
      */
     std::queue<File> files;
 
-    // バッファーサイズ
-    int buf_size = 1024;
-    char str[buf_size];
+    // 1行の文字列を保持する変数。文字数は可変するのでstd::stringで取得
+    std::string line_str;
 
     while(!paths.empty())
     {
@@ -88,30 +81,36 @@ int main(int argc, const char *argv[])
         while (!file.eof())
         {
             lineCount++;
-            file.getline(str, buf_size);
+            // 1行の文字列を取得
+            getline(file, line_str);
+
             std::cmatch cmatch;
 
-            if (std::regex_search(str, cmatch, std::regex("^[<]{7}")))
+            // メモリ確保（regex_searchはstd::stringを扱えないのでcharに変換）
+            int buf_size = line_str.size() + 1;
+            char *line_chars = new char[buf_size];
+
+            // std::stringを*chareに変換（複数回参照するため、std::string.s_strは使わない）
+            std::char_traits<char>::copy(
+                line_chars, line_str.c_str(), buf_size);
+
+            if (std::regex_search(line_chars, cmatch, std::regex("^[<]{7}")))
             {
                 status.conflict.detection();
                 file_info->add_conflict_head(lineCount);
-                // std::cout << GRN << str << NC << std::endl;
-                continue;
-            }
-            if (std::regex_search(str, cmatch, std::regex("^[=]{7}")))
+            } else 
+            if (std::regex_search(line_chars, cmatch, std::regex("^[=]{7}")))
             {
                 status.conflict.detection();
                 file_info->add_conflict_boundary(lineCount);
-                // std::cout << RED << str << NC << std::endl;
-                continue;
-            }
-            if (std::regex_search(str, cmatch, std::regex("^[>]{7}")))
+            } else 
+            if (std::regex_search(line_chars, cmatch, std::regex("^[>]{7}")))
             {
                 status.conflict.detection();
                 file_info->add_conflict_tail(lineCount);
-                // std::cout << CYN << str << NC << std::endl;
-                continue;
             }
+            // メモリ解放
+            delete[] line_chars;
         }
 
         if (status.conflict.status())
@@ -156,13 +155,8 @@ int main(int argc, const char *argv[])
         }
         files.pop();
     }
-    /**
-     * conflictマーカー
-     * 見つからない = 0（成功）
-     * 見つかった　 = 1（失敗）
-     * それ以外　　= -1
-     */
-    return status.conflicts.status() ? 1 : 0;
+
+    return status.conflicts.status() ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 
 
