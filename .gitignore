@@ -1,7 +1,3 @@
 **/.vscode
-**/*.o
-conflict-marker-check
-**/test
 **/build
 **/CMakeFiles
-**/CMakeCache.txt
