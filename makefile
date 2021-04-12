@@ -1,17 +1,17 @@
 # 多段makeの実行
 # https://boxnos.hatenablog.com/entry/20070110/1168429231
 
-build:
-	@echo [run] $@;
+# build:
+# 	@echo [run] $@;
 	
-	@make -C ./src build
+# 	@make -C ./src build
 
-	@echo;
+# 	@echo;
 
 install:
 	@echo [run] $@;
 	
-	cp ./src/conflict-marker-check /usr/local/bin
+	cp ./build/conflict-marker-check /usr/local/bin
 
 	@make message-install
 	@echo;
