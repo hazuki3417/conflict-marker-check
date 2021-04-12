@@ -4,10 +4,37 @@
 
 gitによって生成されたコンフリクトマーカーを検出するコマンド。
 
-# 導入
+
+# ビルド
+
+cmakeを使ってビルド。
+
+```sh
+cd build
+
+cmake ..
+
+cmake --build .
+```
+
+## コマンド実行
+
+```sh
+cd build
+
+# コマンド実行
+./conflict-marker-check
+
+# Google Test実行
+./conflict-marker-check-test
+```
+
+# インストール・アンインストール
 
 ```sh
 # インストール
+make
+# or
 make install
 
 # アンインストール
@@ -22,8 +49,6 @@ which conflict-marker-check
 
 /usr/local/bin/conflict-marker-check
 ```
-
-
 
 # 使い方
 
