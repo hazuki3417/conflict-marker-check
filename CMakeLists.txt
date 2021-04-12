@@ -22,17 +22,18 @@ add_subdirectory(submodules/googletest)
 
 set(TEST_DIR tests)
 
-file(GLOB TEST_SOURCE ${TEST_DIR}/main.cpp)
+
+file(GLOB TEST_SOURCE ${TEST_DIR}/*.*)
+
 
 # build for testing
-add_executable(conflict-marker-check-test ${TEST_SOURCE})
+add_executable(conflict-marker-check-test ${TEST_SOURCE} ${LIB_SOURCE})
+
 
 target_include_directories(
 	conflict-marker-check-test PUBLIC
 	${PROJECT_SOURCE_DIR}/submodules/googletest/googletest/include
 )
-
-message(STATUS "PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
 
 target_link_libraries(
 	conflict-marker-check-test
