@@ -4,50 +4,21 @@
 
 gitによって生成されたコンフリクトマーカーを検出するコマンド。
 
+# ビルド・インストール・アンインストール
+
+```sh
+cd build
+
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local 
 
 # ビルド
-
-cmakeを使ってビルド。
-
-```sh
-cd build
-
-cmake ..
-
 cmake --build .
-```
 
-## コマンド実行
-
-```sh
-cd build
-
-# コマンド実行
-./conflict-marker-check
-
-# Google Test実行
-./conflict-marker-check-test
-```
-
-# インストール・アンインストール
-
-```sh
 # インストール
-make
-# or
-make install
+cmake --install .
 
 # アンインストール
-make uninstall
-```
-
-インストールすると下記ディレクトリにコマンドがインストールされます。
-
-```sh
-# macOS
-which conflict-marker-check 
-
-/usr/local/bin/conflict-marker-check
+xargs rm -rfv < install_manifest.txt
 ```
 
 # 使い方

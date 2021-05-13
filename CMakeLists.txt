@@ -4,40 +4,54 @@ project(conflict-marker-check
     DESCRIPTION "git conflict marker check command"
     LANGUAGES CXX)
 
-
-
 set(SRC_DIR src)
+set(TEST_DIR tests)
 set(C_DIR ${SRC_DIR}/classes)
 set(H_DIR ${SRC_DIR}/classes)
 
 file(GLOB MAIN_SOURCE ${SRC_DIR}/main.cpp)
 file(GLOB LIB_SOURCE ${C_DIR}/*.cpp)
-
-include_directories(${H_DIR})
-
-# build
-add_executable(conflict-marker-check  ${MAIN_SOURCE} ${LIB_SOURCE})
-
-add_subdirectory(submodules/googletest)
-
-set(TEST_DIR tests)
-
-
 file(GLOB TEST_SOURCE ${TEST_DIR}/*.*)
 
+## build
+set(BUILD_MAIN ${PROJECT_NAME})
 
-# build for testing
-add_executable(conflict-marker-check-test ${TEST_SOURCE} ${LIB_SOURCE})
-
+add_executable(
+	${BUILD_MAIN}
+	${MAIN_SOURCE}
+	${LIB_SOURCE}
+)
 
 target_include_directories(
-	conflict-marker-check-test PUBLIC
-	${PROJECT_SOURCE_DIR}/submodules/googletest/googletest/include
+	${BUILD_MAIN} 
+	PUBLIC
+	${H_DIR}
 )
 
-target_link_libraries(
-	conflict-marker-check-test
-	gtest
-)
+INSTALL(TARGETS ${BUILD_MAIN} RUNTIME DESTINATION bin)
 
-add_test(NAME conflict-marker-check-test COMMAND conflict-marker-check-test)
+## testing
+#set(BUILD_TESTING ${PROJECT_NAME}-testing)
+#
+#add_executable(
+#	${BUILD_TESTING}
+#	${TEST_SOURCE}
+#	${LIB_SOURCE}
+#)
+#
+#target_include_directories(
+#	${BUILD_TESTING}
+#	PUBLIC
+#	${H_DIR}
+#	${PROJECT_SOURCE_DIR}/submodules/googletest/googletest/include
+#)
+#
+#add_subdirectory(submodules/googletest)
+#
+#target_link_libraries(
+#	${BUILD_TESTING}
+#	gtest
+#)
+#
+#add_test(NAME ${BUILD_TESTING} COMMAND ${BUILD_TESTING})
+
